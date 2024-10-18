@@ -66,6 +66,10 @@ body {
     font-size: 1.5em;
 }
 
+.wishlist-icon i.liked {
+    color: darkred; /* Changes color when liked */
+}
+
 /* Property Info Styles */
 .property-info {
     padding: 20px 0;
