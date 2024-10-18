@@ -153,4 +153,67 @@ body {
 }
 
 .modal-content {
-    background
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    width: 80%;
+    max-width: 450px;
+    position: relative;
+    animation: slide-down 0.5s ease;
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #7f8c8d;
+}
+
+.close:hover {
+    color: #e74c3c;
+}
+
+/* Map Button */
+.map-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.map-btn:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
