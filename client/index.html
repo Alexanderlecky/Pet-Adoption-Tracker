@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Prestige Property Card</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <div class="property-card">
+        <div class="property-image">
+            <img src="house.jpg" alt="Beautiful House">
+            <div class="wishlist-icon">
+                <i class="fa fa-heart"></i> <!-- Like (wishlist) button -->
+            </div>
+        </div>
+        <div class="property-info">
+            <h2>Modern Villa in Beverly Hills</h2>
+            <p class="price">$12,500,000</p>
+            <div class="icons">
+                <span><i class="fa fa-bed"></i> 5 Bedrooms</span>
+                <span><i class="fa fa-bath"></i> 6 Bathrooms</span>
+            </div>
+            <button class="buy-btn">Buy Now</button>
+            <button class="view-btn">View Property</button>
+        </div>
+    </div>
+
+    <!-- Modal for Viewing Property Details -->
+    <div class="modal" id="propertyModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Property Details</h2>
+            <p><strong>Bedrooms:</strong> 5</p>
+            <p><strong>Bathrooms:</strong> 6</p>
+            <p><strong>Kitchen:</strong> Modern, fully equipped</p>
+            <p><strong>Swimming Pool:</strong> Infinity pool</p>
+            <button class="map-btn">View Location</button>
+        </div>
+    </div>
+
+</body>
+</html>
