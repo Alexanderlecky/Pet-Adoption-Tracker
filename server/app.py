@@ -109,7 +109,6 @@ def add_favorite(house_id):
     db.session.commit()
     return jsonify({"message": "Added to favorites"}), 201
 
-
 @app.route('/favorites', methods=['GET'])
 @login_required
 def get_favorites():
@@ -124,5 +123,4 @@ def get_favorites():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
 
