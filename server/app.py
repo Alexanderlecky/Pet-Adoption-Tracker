@@ -32,7 +32,9 @@ with app.app_context():
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# Authentication Routes
+# ------------------ Authentication Endpoints ------------------
+
+# POST: Sign up
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -40,10 +42,7 @@ def signup():
     email = data['email']
     password = data['password']
 
-    # Hash the password
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-
-    # Create a new user
     new_user = User(username=username, email=email, password=hashed_password)
 
     try:
@@ -54,6 +53,7 @@ def signup():
         db.session.rollback()
         return jsonify({"message": "User with that email or username already exists"}), 400
 
+# POST: Login
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -66,13 +66,9 @@ def login():
         return jsonify({"message": "Login successful"}), 200
     return jsonify({"message": "Invalid credentials"}), 401
 
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return jsonify({"message": "Logout successful"}), 200
+# ------------------ Property Endpoints ------------------
 
-# Property Routes
+# GET: Retrieve all properties (no login required)
 @app.route('/properties', methods=['GET'])
 def get_properties():
     houses = House.query.all()
@@ -87,6 +83,7 @@ def get_properties():
         "longitude": house.longitude
     } for house in houses]), 200
 
+# GET: Retrieve a specific property (no login required)
 @app.route('/properties/<int:house_id>', methods=['GET'])
 def get_property(house_id):
     house = House.query.get_or_404(house_id)
@@ -101,6 +98,24 @@ def get_property(house_id):
         "longitude": house.longitude
     }), 200
 
+# PUT: Update property details (login required)
+@app.route('/properties/<int:house_id>', methods=['PUT'])
+@login_required
+def update_property(house_id):
+    house = House.query.get_or_404(house_id)
+    data = request.get_json()
+
+    house.name = data.get('name', house.name)
+    house.description = data.get('description', house.description)
+    house.location = data.get('location', house.location)
+    house.price = data.get('price', house.price)
+
+    db.session.commit()
+    return jsonify({"message": "Property updated successfully"}), 200
+
+# ------------------ Favorite Endpoints ------------------
+
+# POST: Add a property to favorites (login required)
 @app.route('/favorites/add/<int:house_id>', methods=['POST'])
 @login_required
 def add_favorite(house_id):
@@ -109,6 +124,7 @@ def add_favorite(house_id):
     db.session.commit()
     return jsonify({"message": "Added to favorites"}), 201
 
+# GET: Retrieve all favorites for the logged-in user (login required)
 @app.route('/favorites', methods=['GET'])
 @login_required
 def get_favorites():
@@ -121,6 +137,34 @@ def get_favorites():
         "image": fav.house.image
     } for fav in favorites]), 200
 
+# PATCH: Update a favorite (login required)
+@app.route('/favorites/<int:favorite_id>', methods=['PATCH'])
+@login_required
+def update_favorite(favorite_id):
+    favorite = Favorite.query.get_or_404(favorite_id)
+
+    if favorite.user_id != current_user.id:
+        return jsonify({"message": "Unauthorized"}), 403
+
+    data = request.get_json()
+    # Assume we allow patching notes (or other favorite-related info)
+    favorite.notes = data.get('notes', favorite.notes)
+    db.session.commit()
+    return jsonify({"message": "Favorite updated successfully"}), 200
+
+# DELETE: Remove a favorite (login required)
+@app.route('/favorites/<int:favorite_id>', methods=['DELETE'])
+@login_required
+def delete_favorite(favorite_id):
+    favorite = Favorite.query.get_or_404(favorite_id)
+
+    if favorite.user_id != current_user.id:
+        return jsonify({"message": "Unauthorized"}), 403
+
+    db.session.delete(favorite)
+    db.session.commit()
+    return jsonify({"message": "Favorite removed successfully"}), 200
+
+# ------------------ Run Application ------------------
 if __name__ == "__main__":
     app.run(debug=True)
-
