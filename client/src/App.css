@@ -1,0 +1,71 @@
+/* App.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  header, footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  header ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  header ul li {
+    display: inline;
+    margin: 0 10px;
+  }
+  
+  header ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .property-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .property-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    background-color: white;
+    width: 30%;
+  }
+  
+  .search-bar input {
+    padding: 5px;
+    width: 80%;
+  }
+  
+  .search-bar button {
+    padding: 5px;
+    background-color: #333;
+    color: white;
+    border: none;
+  }
+  
+  .filter input {
+    padding: 5px;
+    width: 100%;
+  }
+  
+  footer a {
+    color: white;
+  }
+  
