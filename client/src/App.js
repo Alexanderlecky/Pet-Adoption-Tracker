@@ -8,6 +8,8 @@ import About from './pages/About';
 import PrestigeProperties from './pages/PrestigeProperties'; // Make sure this component exists
 import './App.css';
 import NotFound from './pages/NotFound';
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 function App() {
   return (
@@ -17,8 +19,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/properties" element={<Properties />} />
         <Route path="/about" element={<About />} />
-        <Route path="/Prestige-Properties" element={<PrestigeProperties />} /> {/* Added route */}
-        <Route path="*" element={<NotFound />} /> {/* Optional: handle 404 */}
+        <Route path="/prestige-properties" element={<PrestigeProperties />} /> 
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} /> 
       </Routes>
       <Footer />
     </div>

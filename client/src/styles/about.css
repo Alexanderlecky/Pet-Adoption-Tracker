@@ -1,12 +1,17 @@
-.about-hero {
-    /* background: url('../assets/images/about-hero1.jpg') no-repeat center center/cover; */
-    padding: 80px 0;
-    color: black;
-    text-align: center;
-    height: 300px;
-    width: 100%;
-  }
 
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1507089947368-19c1da9775ae?ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-4.0.3&q=80&fit=crop&w=1500&h=1000');
+      padding: 80px 0;
+      color: #141414; /* Set text color to white for contrast */
+      text-align: center;
+      height: 300px;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
   .hero-small-text {
     font-size: 18px;
     font-weight: bolder;
@@ -19,7 +24,7 @@
     font-size: 48px;
     font-weight: 700;
     margin-bottom: 20px;
-    color: #1085FF;
+    color: #ff1058;
   }
   
   .hero-subtext {
@@ -35,7 +40,7 @@
 .about-container {
     padding: 20px;
     margin: 20px;
-    background-color: #f9f9f9;
+    background-color: white;
     border-radius: 10px;
     color: #333;
   }
@@ -97,12 +102,12 @@
   }
   
   .expert h4 {
-    color: #0056b3;
+    color: #b300a4;
     margin-top: 10px;
   }
   
   .expert p {
-    color: #555;
+    color: #eb0aa7;
   }
   
   /* Circular Image Holder */

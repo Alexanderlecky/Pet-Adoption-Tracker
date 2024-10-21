@@ -13,33 +13,50 @@ body {
   padding-bottom: 50px; /* Adjust based on footer height */
 }
 
-header, footer {
-  background-color: #333;
-  color: #fff;
+header {
+  display: flex; /* Use flexbox for the header */
+  flex-direction: column; /* Stack header items vertically */
+  align-items: center; /* Center header content */
+  background-color: transparent; /* Make background color transparent */
+  color: rgb(32, 31, 31); /* Set text color to white */
   text-align: center;
-  padding: 10px;
+  padding: 20px; /* Add padding to header */
+  animation: float 3s ease-in-out infinite; /* Floating animation */
+}
+
+header h1 {
+  margin: 0; /* Remove default margin */
+}
+
+header nav {
+  margin-top: 10px; /* Space above nav links */
+}
+
+header nav a {
+  color: rgb(32, 31, 31); /* White text color for links */
+  text-decoration: none; /* Remove underline */
+  margin: 0 15px; /* Space out the links */
+  font-weight: bold; /* Make links bold */
+  transition: color 0.3s; /* Smooth transition on hover */
+}
+
+header nav a:hover {
+  color: #f0f0f0; /* Lighten link color on hover */
 }
 
 footer {
+  background-color: #333;
+  color: #e7e5e5;
+  text-align: center;
+  padding: 10px;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
 }
 
-header ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-header ul li {
-  display: inline;
-  margin: 0 10px;
-}
-
-header ul li a {
+footer a {
   color: white;
-  text-decoration: none;
 }
 
 .property-list {
@@ -70,9 +87,15 @@ header ul li a {
 
 .filter input {
   padding: 5px;
-  width: 100%;
+  width: 25%;
 }
 
-footer a {
-  color: white;
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0); /* Start at original position */
+  }
+  50% {
+    transform: translateY(-10px); /* Float up */
+  }
 }

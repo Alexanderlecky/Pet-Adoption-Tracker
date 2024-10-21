@@ -8,7 +8,7 @@ const PrestigeProperties = () => {
 
   useEffect(() => {
     const fetchProperties = async () => {
-      const response = await fetch('http://localhost:5000/properties'); // Replace with your API endpoint
+      const response = await fetch('http://localhost:5000/properties'); //  API endpoint
       const data = await response.json();
       setProperties(data);
     };
@@ -19,7 +19,6 @@ const PrestigeProperties = () => {
   return (
     <div>
       <h1>Prestige Properties</h1>
-      {/* Include your search bar and setFilter logic here */}
       <SearchBar  setFilter={setFilter} />
       <PropertyList properties={properties} filter={filter} />
     </div>
