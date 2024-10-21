@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PropertyList = ({ properties = [], filter }) => { // Default to empty array
+const PropertyList = ({ properties = [], filter }) => { 
   const filteredProperties = properties.filter((property) =>
     property.location.includes(filter)
   );
@@ -12,7 +12,12 @@ const PropertyList = ({ properties = [], filter }) => { // Default to empty arra
           <h2>{property.name}</h2>
           <p>{property.location}</p>
           <p>{property.price}</p>
-          <img src={property.image} alt={property.name} />
+          {/* Construct the full URL to access the images */}
+          <img 
+            src={`http://localhost:5000/${property.image}`} 
+            alt={property.name} 
+            style={{ width: "300px" }} 
+          />
         </div>
       ))}
     </div>
