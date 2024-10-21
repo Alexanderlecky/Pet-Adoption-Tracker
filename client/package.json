@@ -7,7 +7,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build", 
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -18,10 +20,11 @@
   "bugs": {
     "url": "https://github.com/Alexanderlecky/Prestige-Properties/issues"
   },
-  "homepage": "https://github.com/Alexanderlecky/Prestige-Properties#readme",
+  "homepage": "https://alexanderlecky.github.io/Prestige-Properties",
   "dependencies": {
     "react-router-dom": "^6.27.0",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "gh-pages": "^5.0.0"
   },
   "browserslist": {
     "production": [
