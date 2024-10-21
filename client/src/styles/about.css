@@ -1,0 +1,128 @@
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1507089947368-19c1da9775ae?ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-4.0.3&q=80&fit=crop&w=1500&h=1000');
+      padding: 80px 0;
+      color: #141414; /* Set text color to white for contrast */
+      text-align: center;
+      height: 300px;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  .hero-small-text {
+    font-size: 18px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .hero-heading {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #ff1058;
+  }
+  
+  .hero-subtext {
+    font-size: 20px;
+    font-weight: 400px;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+
+  
+.about-container {
+    padding: 20px;
+    margin: 20px;
+    background-color: white;
+    border-radius: 10px;
+    color: #333;
+  }
+  
+  .about-container h2,
+  .about-container h3 {
+    color: #333;
+  }
+  
+  .services, .values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .service, .value {
+    flex: 1 1 300px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .service h4, .value h4 {
+    margin-bottom: 10px;
+    color: #007BFF;
+  }
+  
+  .service p, .value p {
+    color: #666;
+    line-height: 1.6;
+  }
+  
+  .about-container {
+    padding: 20px;
+  }
+  
+  .services,
+  .values,
+  .experts {
+    margin-bottom: 30px;
+  }
+  
+  .service,
+  .value,
+  .expert {
+    margin-bottom: 20px;
+  }
+  
+  .experts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .expert {
+    flex: 1 1 30%; /* Three experts per row */
+    text-align: center;
+  }
+  
+  .expert h4 {
+    color: #b300a4;
+    margin-top: 10px;
+  }
+  
+  .expert p {
+    color: #eb0aa7;
+  }
+  
+  /* Circular Image Holder */
+  .expert .image-holder {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 10px;
+    background-color: #ddd;
+    border-radius: 50%; /* Makes the image holder circular */
+    overflow: hidden;
+  }
+  
+  .expert img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the whole holder */
+    display: block;
+  }

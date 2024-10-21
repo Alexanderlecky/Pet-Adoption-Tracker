@@ -1,0 +1,41 @@
+{
+  "name": "prestige-properties",
+  "version": "1.0.0",
+  "description": "homes",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build", 
+    "deploy": "gh-pages -d build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alexanderlecky/Prestige-Properties.git"
+  },
+  "author": "syntax squad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alexanderlecky/Prestige-Properties/issues"
+  },
+  "homepage": "https://alexanderlecky.github.io/Prestige-Properties",
+  "dependencies": {
+    "react-router-dom": "^6.27.0",
+    "react-scripts": "^5.0.1",
+    "gh-pages": "^5.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
