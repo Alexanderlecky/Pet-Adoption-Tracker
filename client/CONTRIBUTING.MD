@@ -38,4 +38,3 @@ To report a bug, please:
 - Provide steps to reproduce the bug and any relevant screenshots.
 
 ## Feature Suggestions
-We are open to new ideas! Open an issue with your feature suggestion, and the team will discuss how it fits into our roadmap.
