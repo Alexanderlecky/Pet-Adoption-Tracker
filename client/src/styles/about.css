@@ -1,0 +1,123 @@
+.about-hero {
+    /* background: url('../assets/images/about-hero1.jpg') no-repeat center center/cover; */
+    padding: 80px 0;
+    color: black;
+    text-align: center;
+    height: 300px;
+    width: 100%;
+  }
+
+  .hero-small-text {
+    font-size: 18px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .hero-heading {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #1085FF;
+  }
+  
+  .hero-subtext {
+    font-size: 20px;
+    font-weight: 400px;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+
+  
+.about-container {
+    padding: 20px;
+    margin: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    color: #333;
+  }
+  
+  .about-container h2,
+  .about-container h3 {
+    color: #333;
+  }
+  
+  .services, .values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .service, .value {
+    flex: 1 1 300px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .service h4, .value h4 {
+    margin-bottom: 10px;
+    color: #007BFF;
+  }
+  
+  .service p, .value p {
+    color: #666;
+    line-height: 1.6;
+  }
+  
+  .about-container {
+    padding: 20px;
+  }
+  
+  .services,
+  .values,
+  .experts {
+    margin-bottom: 30px;
+  }
+  
+  .service,
+  .value,
+  .expert {
+    margin-bottom: 20px;
+  }
+  
+  .experts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .expert {
+    flex: 1 1 30%; /* Three experts per row */
+    text-align: center;
+  }
+  
+  .expert h4 {
+    color: #0056b3;
+    margin-top: 10px;
+  }
+  
+  .expert p {
+    color: #555;
+  }
+  
+  /* Circular Image Holder */
+  .expert .image-holder {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 10px;
+    background-color: #ddd;
+    border-radius: 50%; /* Makes the image holder circular */
+    overflow: hidden;
+  }
+  
+  .expert img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the whole holder */
+    display: block;
+  }
