@@ -1,16 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-// import './index.css'; // Global styles for your app
-import App from './App'; // Root component of your application
-import { BrowserRouter } from 'react-router-dom'; // Enables routing
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+import { AuthProvider } from './AuthContext';  // Import the AuthProvider
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-
-root.render(
-  <React.StrictMode>
-    {/* Wrap the entire app in BrowserRouter for routing support */}
-    <BrowserRouter>
+ReactDOM.render(
+  <BrowserRouter>
+    <AuthProvider>
       <App />
-    </BrowserRouter>
-  </React.StrictMode>
+    </AuthProvider>
+  </BrowserRouter>,
+  document.getElementById('root')
 );
