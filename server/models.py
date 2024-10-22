@@ -29,10 +29,10 @@ class House(db.Model, SerializerMixin):
     location = Column(String(100), nullable=False)
     price = Column(Float, nullable=False)
     image = Column(String(200), nullable=False)
-    latitude = Column(Float, nullable=False)
-    longitude = Column(Float, nullable=False)
-    house_type = Column(String(50), nullable=False)  # E.g., apartment, villa, etc.
-    listed_date = Column(DateTime, default=datetime.utcnow)  # When the house was listed
+    # latitude = Column(Float, nullable=False)
+    # longitude = Column(Float, nullable=False)
+    # house_type = Column(String(50), nullable=False)  # E.g., apartment, villa, etc.
+    # listed_date = Column(DateTime, default=datetime.utcnow)  # When the house was listed
 
     # Relationships
     favorited_by = relationship('Favorite', back_populates='house')

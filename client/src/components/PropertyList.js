@@ -20,14 +20,14 @@ const PropertyList = () => {
       {/* Display the properties */}
       {properties.map((property) => (
         <div key={property.id} className="property-item">
-          <h2>{property.name}</h2>
-          <p>{property.location}</p>
-          <p>${property.price}</p>
-          <img
-            src={property.image_url} // Use 'image_url' from your backend
+                    <img
+            src={property.image} // Use 'image_url' from your backend
             alt={property.name}
             style={{ width: "300px", height: "200px", objectFit: "cover" }} // Adjust size as needed
           />
+          <h2>{property.name}</h2>
+          <p>{property.location}</p>
+          <p>{property.price.toLocaleString('en-KE', { style: 'currency', currency: 'KES' })}</p>
         </div>
       ))}
     </div>
