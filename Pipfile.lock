@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3990bb19d534905d7b1d6466b4f331c6e58a5d5095701b1934a997ae7b797883"
+            "sha256": "dd020bc663eef8694cca42838a091cb18de1443e67947feccd1e8444809e1da3"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -294,6 +294,14 @@
             "markers": "python_version >= '3.7'",
             "version": "==3.1.1"
         },
+        "honcho": {
+            "hashes": [
+                "sha256:56dcd04fc72d362a4befb9303b1a1a812cba5da283526fbc6509be122918ddf3",
+                "sha256:af3815c03c634bf67d50f114253ea9fef72ecff26e4fd06b29234789ac5b8b2e"
+            ],
+            "index": "pypi",
+            "version": "==2.0.0"
+        },
         "importlib-metadata": {
             "hashes": [
                 "sha256:45e54197d28b7a7f1559e60b95e7c567032b602131fbd588f1497f47880aa68b",
@@ -534,7 +542,7 @@
                 "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427"
             ],
             "index": "pypi",
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.9.0.post0"
         },
         "python-dotenv": {
@@ -569,7 +577,7 @@
                 "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
             ],
             "index": "pypi",
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.16.0"
         },
         "sqlalchemy": {

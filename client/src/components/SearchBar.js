@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
-// import './SearchBar.css';
+import "../styles/SearchBar.css"; // Ensure this path is correct
 
 const SearchBar = ({ onSearch }) => {
-  const [query, setQuery] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
-  const handleSearch = (e) => {
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(query);
+    onSearch(inputValue); // Call the onSearch function passed down as a prop
   };
 
   return (
-    <form className="search-bar" onSubmit={handleSearch}>
-      <input 
-        type="text" 
-        placeholder="Search properties..." 
-        value={query} 
-        onChange={(e) => setQuery(e.target.value)} 
+    <form onSubmit={handleSubmit} className="search-bar">
+      <input
+        type="text"
+        placeholder="Search properties..."
+        value={inputValue}
+        onChange={handleChange}
+        required
       />
       <button type="submit">Search</button>
     </form>

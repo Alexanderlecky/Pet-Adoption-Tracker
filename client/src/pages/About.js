@@ -147,10 +147,10 @@ const About = () => {
             <div className="image-holder">
               <img
                 src="https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=600"
-                alt="Alexender Master"
+                alt="Alexander Master"
               />
             </div>
-            <h4>Alexernder Master</h4>
+            <h4>Alexarnder Master</h4>
             <p>Feasibility Study</p>
           </div>
 
@@ -158,10 +158,10 @@ const About = () => {
             <div className="image-holder">
               <img
                 src="https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=600"
-                alt="Emmanuel Odhiambo"
+                alt="Emmanuel Onyango"
               />
             </div>
-            <h4>Emmanuel Odhiambo</h4>
+            <h4>Emmanuel Onyango</h4>
             <p>Finance / Admin</p>
           </div>
 
