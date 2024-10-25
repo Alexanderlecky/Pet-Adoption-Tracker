@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Float, Text, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy_serializer import SerializerMixin
+from flask_login import UserMixin
 from datetime import datetime
 
 db = SQLAlchemy()
@@ -16,6 +17,13 @@ class User(db.Model, SerializerMixin):
     role = Column(String(50), nullable=False, default='user')  # User role (e.g., admin, user)
     created_at = Column(DateTime, default=datetime.utcnow)  # When the user was created
 
+    # Flask-Login required methods
+    @property
+    def is_active(self):
+        # Return True if the user is active
+        return self.active
+
+
     # Relationships
     favorites = relationship('Favorite', back_populates='user')
     transactions = relationship('Transaction', back_populates='user')
@@ -25,7 +33,7 @@ class House(db.Model, SerializerMixin):
     __tablename__ = 'houses'
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
-    description = Column(Text, nullable=False)
+    # description = Column(Text, nullable=False)
     location = Column(String(100), nullable=False)
     price = Column(Float, nullable=False)
     image = Column(String(200), nullable=False)
