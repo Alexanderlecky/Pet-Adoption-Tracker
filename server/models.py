@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, Float, Text, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, Float, Text, ForeignKey, DateTime, Boolean 
 from sqlalchemy.orm import relationship
 from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime
@@ -7,25 +7,27 @@ from datetime import datetime
 db = SQLAlchemy()
 
 # User Model
+# User Model
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     username = Column(String(100), unique=True, nullable=False)
     email = Column(String(120), unique=True, nullable=False)
     password = Column(String(200), nullable=False)
-    role = Column(String(50), nullable=False, default='user')  # User role (e.g., admin, user)
-    created_at = Column(DateTime, default=datetime.utcnow)  # When the user was created
+    role = Column(String(50), nullable=False, default='user')
+    created_at = Column(DateTime, default=datetime.utcnow)
+    is_active = Column(Boolean, default=True)  # Ensure this is part of the model
 
     # Relationships
     favorites = relationship('Favorite', back_populates='user')
     transactions = relationship('Transaction', back_populates='user')
+
 
 # House Model
 class House(db.Model, SerializerMixin):
     __tablename__ = 'houses'
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
-    description = Column(Text, nullable=False)
     location = Column(String(100), nullable=False)
     price = Column(Float, nullable=False)
     image = Column(String(200), nullable=False)
