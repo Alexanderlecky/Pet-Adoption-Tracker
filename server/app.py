@@ -81,8 +81,6 @@ def get_properties():
         "location": house.location,
         "price": house.price,
         "image": house.image,
-        "latitude": house.latitude,
-        "longitude": house.longitude
     } for house in houses]), 200
 
 # GET: Retrieve a specific property (no login required)
@@ -96,8 +94,6 @@ def get_property(house_id):
         "location": house.location,
         "price": house.price,
         "image": house.image,
-        "latitude": house.latitude,
-        "longitude": house.longitude
     }), 200
 
 # PUT: Update property details (login required)
