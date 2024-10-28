@@ -1,5 +1,5 @@
 from app import app
-from models import db, House
+from models import db, ouse
 
 with app.app_context():
     db.create_all()
