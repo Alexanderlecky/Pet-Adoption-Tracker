@@ -29,6 +29,10 @@ migrate = Migrate(app, db)
 with app.app_context():
     db.create_all()
 
+@app.route('/')
+def home():
+    return jsonify(message="Hello, World!")
+
 # Load user for Flask-Login session management
 @login_manager.user_loader
 def load_user(user_id):
