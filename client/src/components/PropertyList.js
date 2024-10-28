@@ -27,16 +27,13 @@ const PropertyList = () => {
           />
           <h2>{property.name}</h2>
           <p>{property.location}</p>
-<<<<<<< HEAD
           <p>{property.price.toLocaleString('en-KE', { style: 'currency', currency: 'KES' })}</p>
-=======
           <p>${property.price}</p>
           <img
             src={property.image_url} // Use 'image_url' from your backend
             alt={property.name}
             style={{ width: "300px", height: "200px", objectFit: "cover" }} // Adjust size as needed
           />
->>>>>>> 913351bb (done some changes)
         </div>
       ))}
     </div>

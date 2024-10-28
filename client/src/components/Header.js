@@ -10,11 +10,8 @@ const Header = () => {
         <Link to="/">Home</Link>
         <Link to="/properties">Properties</Link>
         <Link to="/about">About</Link>
-<<<<<<< HEAD
-=======
         <Link to="/signup">Sign Up</Link>
         <Link to="/login">Login</Link>
->>>>>>> 913351bb (done some changes)
       </nav>
     </header>
   );
