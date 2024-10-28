@@ -169,4 +169,4 @@ def delete_favorite(favorite_id):
 
 # ------------------ Run Application ------------------
 if __name__ == "__main__":
-    app.run(port=5000)
+    app.run()
