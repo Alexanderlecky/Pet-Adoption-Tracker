@@ -20,7 +20,7 @@ const Login = () => {
     console.log('Login form submitted:', formData);
 
     try {
-      const response = await fetch('https://your-api-endpoint.com/login', {
+      const response = await fetch('https://prestige-properties.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
