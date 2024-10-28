@@ -18,6 +18,7 @@ Flask-Login==0.6.3
 Flask-Migrate==4.0.7
 Flask-RESTful==0.3.10
 Flask-SQLAlchemy==2.5.1
+gunicorn
 Greenlet==3.1.1
 Importlib_metadata==8.5.0
 Importlib_resources==6.4.5
