@@ -45,6 +45,8 @@ header nav a:hover {
 }
 
 footer {
+  background-color: #333;  /* Dark background */
+  color: #e7e5e5;          /* Light text color */
 <<<<<<< HEAD
   background-color: #333;  /* Dark background */
   color: #e7e5e5;          /* Light text color */
@@ -55,6 +57,8 @@ footer {
   background-color: #333;
   color: #e7e5e5;
   text-align: center;
+  padding: 5px;            /* Reduced padding for a smaller appearance */
+  font-size: 12px;         /* Smaller font size */
   padding: 10px;
 >>>>>>> 913351bb (done some changes)
   position: fixed;
@@ -63,10 +67,20 @@ footer {
   right: 0;
   height: 40px;            /* Set a fixed height to control footer size */
   line-height: 40px;       /* Align text vertically within the footer */
+  height: 40px;            /* Set a fixed height to control footer size */
+  line-height: 40px;       /* Align text vertically within the footer */
 }
 
 footer a {
   color: white;
+  text-decoration: none;   /* Remove underline from links */
+  font-size: 12px;         /* Ensure link text size matches the footer text */
+}
+
+footer a:hover {
+  text-decoration: underline; /* Optional: Add underline on hover */
+}
+
 <<<<<<< HEAD
   text-decoration: none;   /* Remove underline from links */
   font-size: 12px;         /* Ensure link text size matches the footer text */
@@ -136,4 +150,14 @@ footer a:hover {
   }
 =======
 >>>>>>> 913351bb (done some changes)
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  footer {
+    font-size: 10px;       /* Even smaller font for mobile */
+    padding: 3px;          /* Reduce padding further on smaller screens */
+    height: 30px;          /* Adjust height on mobile */
+    line-height: 30px;
+  }
 }

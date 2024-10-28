@@ -9,8 +9,6 @@ from config import Config  # Importing configuration
 from models import db, User, House, Favorite  # Importing models
 from dotenv import load_dotenv
 from  flask_cors import CORS
-import jwt
-from werkzeug.security import generate_password_hash, check_password_hash
 
 # Load environment variables from .env file
 load_dotenv()
@@ -57,37 +55,18 @@ def signup():
         db.session.rollback()
         return jsonify({"message": "User with that email or username already exists"}), 400
 
-# # POST: Login
-# @app.route('/login', methods=['POST'])
-# def login():
-#     data = request.get_json()
-#     email = data.get('email')
-#     password = data.get('password')
-
-#     user = User.query.filter_by(email=email).first()
-#     if user and bcrypt.check_password_hash(user.password, password):
-#         login_user(user)
-#         return jsonify({"message": "Login successful"}), 200
-#     return jsonify({"message": "Invalid credentials"}), 401
-
+# POST: Login
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-
-    email = data.get('email')
-    password = data.get('password')
-
-    if not email or not password:
-        return jsonify({"message": "Missing email or password"}), 400
+    email = data['email']
+    password = data['password']
 
     user = User.query.filter_by(email=email).first()
-
-    if user and check_password_hash(user.password, password):
-        login_user(user)  # Logs the user in
+    if user and bcrypt.check_password_hash(user.password, password):
+        login_user(user)
         return jsonify({"message": "Login successful"}), 200
-
     return jsonify({"message": "Invalid credentials"}), 401
-
 
 # ------------------ Property Endpoints ------------------
 
@@ -190,4 +169,4 @@ def delete_favorite(favorite_id):
 
 # ------------------ Run Application ------------------
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(port=5000)
