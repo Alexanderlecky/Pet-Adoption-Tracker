@@ -1,10 +1,13 @@
 {
   "files": {
-    "main.js": "/Prestige-Properties/static/js/main.e6dfe175.js",
+    "main.css": "/Prestige-Properties/static/css/main.f66c22d3.css",
+    "main.js": "/Prestige-Properties/static/js/main.bfa5a2f3.js",
     "index.html": "/Prestige-Properties/index.html",
-    "main.e6dfe175.js.map": "/Prestige-Properties/static/js/main.e6dfe175.js.map"
+    "main.f66c22d3.css.map": "/Prestige-Properties/static/css/main.f66c22d3.css.map",
+    "main.bfa5a2f3.js.map": "/Prestige-Properties/static/js/main.bfa5a2f3.js.map"
   },
   "entrypoints": [
-    "static/js/main.e6dfe175.js"
+    "static/css/main.f66c22d3.css",
+    "static/js/main.bfa5a2f3.js"
   ]
 }
