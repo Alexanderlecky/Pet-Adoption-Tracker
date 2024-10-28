@@ -1,4 +1,4 @@
-# Start the React client on port 4000
+# Start the React client on port 3000
 web: npm start --prefix client
 
 # Start the Flask API on port 5000
