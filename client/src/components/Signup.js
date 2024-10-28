@@ -24,11 +24,11 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);       // Clear any previous errors
-    setSuccess(false);     // Reset success message
-    setLoading(true);      // Show loading indicator
+    setSuccess(false);    // Reset success message
+    setLoading(true);     // Show loading indicator
 
     try {
-      const response = await fetch('https://prestige-properties.onrender.com/signup', { // Use actual endpoint
+      const response = await fetch('http://127.0.0.1:5000/api/endpoint', { // Use actual endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +37,9 @@ const Signup = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        // Try to read the response as text and parse it
+        const errorText = await response.text();
+        const errorData = errorText ? JSON.parse(errorText) : {}; // Parse if possible
         throw new Error(errorData.message || 'Signup failed. Please try again.');
       }
 
@@ -54,7 +56,7 @@ const Signup = () => {
 
     } catch (error) {
       console.error('Error:', error);
-      setError(error.message);
+      setError(error.message);  // Display error message
     } finally {
       setLoading(false); // Hide loading indicator
     }

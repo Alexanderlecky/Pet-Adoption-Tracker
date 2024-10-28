@@ -25,7 +25,7 @@ const Login = () => {
     setLoading(true); // Show loading indicator
 
     try {
-      const response = await fetch('https://prestige-properties.onrender.com/login', { // Use actual endpoint
+      const response = await fetch('http://127.0.0.1:5000/api/endpoint', { // Use actual endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,7 +34,9 @@ const Login = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        // Try to get the error message from the response
+        const errorText = await response.text();
+        const errorData = errorText ? JSON.parse(errorText) : {}; // Parse the error response if possible
         throw new Error(errorData.message || 'Invalid login credentials');
       }
 
