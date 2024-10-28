@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import '../styles/Login.css'; // Importing the corresponding CSS file
+import { useNavigate } from 'react-router-dom';  // Import useNavigate for redirection
+import '../styles/Login.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+  const [error, setError] = useState(null);   // State for error messages
+  const [loading, setLoading] = useState(false); // State for loading indicator
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,10 +21,11 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login form submitted:', formData);
+    setError(null);  // Clear any previous errors
+    setLoading(true); // Show loading indicator
 
     try {
-      const response = await fetch('https://prestige-properties.onrender.com/login', {
+      const response = await fetch('https://prestige-properties.onrender.com/login', { // Use actual endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,15 +34,23 @@ const Login = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Invalid login credentials');
       }
 
       const data = await response.json();
       console.log('Login successful:', data);
-      // Handle successful login (e.g., save token, redirect, or show a success message)
+
+      if (data.token) {
+        localStorage.setItem('authToken', data.token);  // Save token to localStorage
+        navigate('/');  // Redirect to home or another protected page
+      }
+
     } catch (error) {
       console.error('Error:', error);
-      // Optionally, handle the error (e.g., show an error message)
+      setError(error.message);  // Display error message to the user
+    } finally {
+      setLoading(false); // Hide loading indicator
     }
   };
 
@@ -45,6 +58,7 @@ const Login = () => {
     <div className="login-container">
       <form className="login-form" onSubmit={handleSubmit}>
         <h2>Login</h2>
+        {error && <p className="error">{error}</p>}  {/* Display error message if any */}
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
@@ -67,7 +81,9 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}>  {/* Disable button while loading */}
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
       </form>
     </div>
   );

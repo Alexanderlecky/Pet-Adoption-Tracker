@@ -11,7 +11,6 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import ProtectedRoute from './ProtectedRoute';  // Import ProtectedRoute
 
-
 function App() {
   return (
     <div className="App">
@@ -19,20 +18,15 @@ function App() {
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        
+
         {/* Protect the following routes */}
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/properties" element={<ProtectedRoute><Properties /></ProtectedRoute>} />
         <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
         <Route path="/prestige-properties" element={<ProtectedRoute><PrestigeProperties /></ProtectedRoute>} />
+
+        {/* Catch-all route for 404 pages */}
         <Route path="*" element={<NotFound />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/properties" element={<Properties />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/prestige-properties" element={<PrestigeProperties />} /> 
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<NotFound />} /> 
       </Routes>
       <Footer />
     </div>

@@ -1,5 +1,5 @@
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import '../styles/Signup.css'; // Importing the corresponding CSS file
 
 const Signup = () => {
@@ -8,6 +8,10 @@ const Signup = () => {
     email: '',
     password: '',
   });
+  const [error, setError] = useState(null);     // State for error messages
+  const [loading, setLoading] = useState(false); // State for loading indicator
+  const [success, setSuccess] = useState(false); // State for success message
+  const navigate = useNavigate();                // For redirection after signup
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,10 +23,12 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Sign up form submitted:', formData);
+    setError(null);       // Clear any previous errors
+    setSuccess(false);     // Reset success message
+    setLoading(true);      // Show loading indicator
 
     try {
-      const response = await fetch('https://your-api-endpoint.com/signup', {
+      const response = await fetch('https://prestige-properties.onrender.com/signup', { // Use actual endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,14 +37,26 @@ const Signup = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Signup failed. Please try again.');
       }
 
       const data = await response.json();
-      console.log('Success:', data);
-      // Handle success (e.g., redirect or show a success message)
+      console.log('Signup successful:', data);
+
+      setSuccess(true);  // Show success message
+      setFormData({ username: '', email: '', password: '' });  // Reset form fields
+
+      // Redirect to login or home page after a delay
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+
     } catch (error) {
       console.error('Error:', error);
+      setError(error.message);
+    } finally {
+      setLoading(false); // Hide loading indicator
     }
   };
 
@@ -46,6 +64,8 @@ const Signup = () => {
     <div className="signup-container">
       <form className="signup-form" onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
+        {error && <p className="error-message">{error}</p>}      {/* Display error message if any */}
+        {success && <p className="success-message">Signup successful! Redirecting to login...</p>} {/* Success message */}
         <div className="form-group">
           <label htmlFor="username">Username:</label>
           <input
@@ -79,7 +99,9 @@ const Signup = () => {
             required
           />
         </div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={loading}>  {/* Disable button while loading */}
+          {loading ? 'Signing up...' : 'Sign Up'}
+        </button>
       </form>
     </div>
   );

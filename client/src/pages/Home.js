@@ -38,6 +38,7 @@ const Home = () => {
       <h1 style={headingStyle}>Welcome to Prestige Properties</h1>
       <SearchBar onSearch={handleSearch} />
       {/* <Login />
+      
       <Signup /> */}
     </div>
   );
