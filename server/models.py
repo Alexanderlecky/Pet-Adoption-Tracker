@@ -33,7 +33,7 @@ class House(db.Model, SerializerMixin):
     __tablename__ = 'houses'
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
-    # description = Column(Text, nullable=False)
+    description = Column(Text, nullable=False)
     location = Column(String(100), nullable=False)
     price = Column(Float, nullable=False)
     image = Column(String(200), nullable=False)
