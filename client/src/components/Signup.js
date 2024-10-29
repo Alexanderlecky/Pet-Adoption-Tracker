@@ -28,7 +28,7 @@ const Signup = () => {
     setLoading(true);     // Show loading indicator
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/signup', { // Use actual endpoint
+      const response = await fetch('/signup', { // Use actual endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
