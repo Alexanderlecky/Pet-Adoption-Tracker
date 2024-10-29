@@ -9,6 +9,7 @@ from config import Config  # Importing configuration
 from models import db, User, House, Favorite  # Importing models
 from dotenv import load_dotenv
 from  flask_cors import CORS
+import logging
 
 # Load environment variables from .env file
 load_dotenv()
@@ -34,19 +35,20 @@ def home():
     return jsonify(message="Hello, World!")
 
 # Load user for Flask-Login session management
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
 
-# ------------------ Authentication Endpoints ------------------
-
-# POST: Sign up
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
-    username = data['username']
-    email = data['email']
-    password = data['password']
+    logging.debug(f"Signup data: {data}")
+
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+
+    if not username or not email or not password:
+        return jsonify({"message": "Missing required fields"}), 400
 
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
     new_user = User(username=username, email=email, password=hashed_password)
@@ -59,19 +61,22 @@ def signup():
         db.session.rollback()
         return jsonify({"message": "User with that email or username already exists"}), 400
 
-# POST: Login
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    email = data['email']
-    password = data['password']
+    logging.debug(f"Login data: {data}")
+
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password:
+        return jsonify({"message": "Missing required fields"}), 400
 
     user = User.query.filter_by(email=email).first()
     if user and bcrypt.check_password_hash(user.password, password):
         login_user(user)
         return jsonify({"message": "Login successful"}), 200
     return jsonify({"message": "Invalid credentials"}), 401
-
 # ------------------ Property Endpoints ------------------
 # Get all properties
 @app.route('/properties', methods=["GET"])
