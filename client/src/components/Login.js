@@ -2,82 +2,57 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import '../styles/Login.css';
 
+
+import axios from 'axios'; // If using axios for HTTP requests
+
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+      email: '',
+      password: ''
   });
-  const [error, setError] = useState(null); // State for error messages
-  const [loading, setLoading] = useState(false); // State for loading indicator
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Initialize navigate function
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);  // Clear any previous errors
-    setLoading(true); // Show loading indicator
+  const handleChange = (event) => {
+      const { name, value } = event.target;
+      setFormData({
+          ...formData,
+          [name]: value
+      });
+  };
 
-    try {
-        const response = await fetch('/login', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(errorText || 'Login failed');
-        }
-
-        const data = await response.json();  // Only parse JSON if the response is OK
-        console.log('Login successful:', data);
-
-        if (data.token) {
-            localStorage.setItem('authToken', data.token);  
-            navigate('/');  
-        }
-
-    } catch (error) {
-        console.error('Error:', error);
-        setError(error.message);  
-    } finally {
-        setLoading(false); 
-    }
-};
+  const handleSubmit = async (event) => {
+      event.preventDefault();
+      try {
+          const response = await axios.post('http://localhost:5000/login', formData);
+          console.log('Login successful:', response.data);
+          // Redirect to the dashboard or home page after login
+          navigate('/dashboard'); // Adjust the route as necessary
+      } catch (error) {
+          console.error('Error logging in:', error);
+          // Show error message to the user
+      }
+  };
 
   return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        {error && <p className="error">{error}</p>} {/* Display error message if any */}
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
+      <form onSubmit={handleSubmit}>
           <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email"
+              required
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
           <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Password"
+              required
           />
-        </div>
-        <button type="submit" disabled={loading}> {/* Disable button while loading */}
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
+          <button type="submit">Login</button>
       </form>
-    </div>
   );
 };
 

@@ -2,99 +2,65 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import '../styles/Signup.css'; // Importing the corresponding CSS file
 
+import axios from 'axios'; // If using axios for HTTP requests
+
 const Signup = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
+      username: '',
+      email: '',
+      password: ''
   });
-  const [error, setError] = useState(null); // State for error messages
-  const [loading, setLoading] = useState(false); // State for loading indicator
-  const [success, setSuccess] = useState(false); // State for success message
-  const navigate = useNavigate(); // For redirection after signup
+  const navigate = useNavigate(); // Initialize navigate function
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);       
-    setSuccess(false);    
-    setLoading(true);     
+  const handleChange = (event) => {
+      const { name, value } = event.target;
+      setFormData({
+          ...formData,
+          [name]: value
+      });
+  };
 
-    try {
-        const response = await fetch('/signup', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(errorText || 'Signup failed. Please try again.');
-        }
-
-        const data = await response.json();  // Only parse JSON if the response is OK
-        console.log('Signup successful:', data);
-
-        setSuccess(true);  
-        setFormData({ username: '', email: '', password: '' });  
-
-        setTimeout(() => {
-            navigate('/login');
-        }, 2000);
-
-    } catch (error) {
-        console.error('Error:', error);
-        setError(error.message);  
-    } finally {
-        setLoading(false); 
-    }
-};
+  const handleSubmit = async (event) => {
+      event.preventDefault();
+      try {
+          const response = await axios.post('http://localhost:5000/signup', formData);
+          console.log('Signup successful:', response.data);
+          // Redirect to login or dashboard after signup
+          navigate('/login'); // Adjust the route as necessary
+      } catch (error) {
+          console.error('Error signing up:', error);
+          // Show error message to the user
+      }
+  };
 
   return (
-    <div className="signup-container">
-      <form className="signup-form" onSubmit={handleSubmit}>
-        <h2>Sign Up</h2>
-        {error && <p className="error-message">{error}</p>} {/* Display error message if any */}
-        {success && <p className="success-message">Signup successful! Redirecting to login...</p>} {/* Success message */}
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
+      <form onSubmit={handleSubmit}>
           <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="Username"
+              required
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
           <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email"
+              required
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
           <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Password"
+              required
           />
-        </div>
-        <button type="submit" disabled={loading}> {/* Disable button while loading */}
-          {loading ? 'Signing up...' : 'Sign Up'}
-        </button>
+          <button type="submit">Sign Up</button>
       </form>
-    </div>
   );
 };
 
