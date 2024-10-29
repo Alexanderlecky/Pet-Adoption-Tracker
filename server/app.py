@@ -73,99 +73,133 @@ def login():
     return jsonify({"message": "Invalid credentials"}), 401
 
 # ------------------ Property Endpoints ------------------
+# Get all properties
+@app.route('/properties', methods=["GET"])
+def properties():
+    properties_list = [
+        {
+            "id": property.id,
+            "name": property.name,
+            "description": property.description,
+            "location": property.location,
+            "price": property.price,
+            "image": property.image
+        }
+        for property in House.query.all()
+    ]
+    return jsonify(properties_list), 200
 
-# GET: Retrieve all properties (no login required)
-@app.route('/properties', methods=['GET'])
-def get_properties():
-    houses = House.query.all()
-    return jsonify([{
-        "id": house.id,
-        "name": house.name,
-        "description": house.description,
-        "location": house.location,
-        "price": house.price,
-        "image": house.image,
-    } for house in houses]), 200
+# Get all users
+@app.route('/users', methods=["GET"])
+def get_users():
+    users_list = [
+        {
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "password": user.password,
+            "role": user.role,
+            "created_at": user.created_at
+        }
+        for user in User.query.all()
+    ]
+    return jsonify(users_list), 200
 
-# GET: Retrieve a specific property (no login required)
-@app.route('/properties/<int:house_id>', methods=['GET'])
-def get_property(house_id):
-    house = House.query.get_or_404(house_id)
-    return jsonify({
-        "id": house.id,
-        "name": house.name,
-        "description": house.description,
-        "location": house.location,
-        "price": house.price,
-        "image": house.image,
-    }), 200
+# Add favorite property
+@app.route('/properties/<int:property_id>/favorite', methods=['POST'])
+def add_property_to_favorites(property_id):
+    token = request.headers.get('Authorization')
+    if not token:
+        return jsonify({'message': 'Authorization credentials missing'}), 401
+    
+    try:
+        token = token.split(' ')[1]
+        payload = decode_token(token)
+    except (IndexError, ValueError):
+        return jsonify({'message': 'Invalid token format or token error'}), 401
 
-# PUT: Update property details (login required)
-@app.route('/properties/<int:house_id>', methods=['PUT'])
-@login_required
-def update_property(house_id):
-    house = House.query.get_or_404(house_id)
-    data = request.get_json()
+    user_id = payload.get('user_id')
+    user = User.query.get(user_id)
+    property = House.query.get(property_id)
 
-    house.name = data.get('name', house.name)
-    house.description = data.get('description', house.description)
-    house.location = data.get('location', house.location)
-    house.price = data.get('price', house.price)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    if not property:
+        return jsonify({"error": "Property not found"}), 404
 
-    db.session.commit()
-    return jsonify({"message": "Property updated successfully"}), 200
+    existing_favorite = Favorite.query.filter_by(user_id=user_id, house_id=property_id).first()
+    if existing_favorite:
+        return jsonify({"message": "Property is already in favorites"}), 200
 
-# ------------------ Favorite Endpoints ------------------
+    new_favorite = Favorite(user_id=user_id, house_id=property_id)
+    try:
+        db.session.add(new_favorite)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"An error occurred while adding to favorites: {str(e)}"}), 500
 
-# POST: Add a property to favorites (login required)
-@app.route('/favorites/add/<int:house_id>', methods=['POST'])
-@login_required
-def add_favorite(house_id):
-    favorite = Favorite(user_id=current_user.id, house_id=house_id)
-    db.session.add(favorite)
-    db.session.commit()
-    return jsonify({"message": "Added to favorites"}), 201
+    favorite_dict = {
+        "user_id": new_favorite.user_id,
+        "property_id": new_favorite.house_id,
+        "favorite_id": new_favorite.id
+    }
+    return jsonify({"message": "Property added to favorites", "favorite": favorite_dict}), 201
 
-# GET: Retrieve all favorites for the logged-in user (login required)
-@app.route('/favorites', methods=['GET'])
-@login_required
-def get_favorites():
-    favorites = Favorite.query.filter_by(user_id=current_user.id).all()
-    return jsonify([{
-        "id": fav.house.id,
-        "name": fav.house.name,
-        "location": fav.house.location,
-        "price": fav.house.price,
-        "image": fav.house.image
-    } for fav in favorites]), 200
+# Property by ID - GET, PATCH, DELETE
+@app.route('/properties/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+def property_by_id(id):
+    property = House.query.get(id)
+    if not property:
+        return jsonify({"message": "Property not found"}), 404
 
-# PATCH: Update a favorite (login required)
-@app.route('/favorites/<int:favorite_id>', methods=['PATCH'])
-@login_required
-def update_favorite(favorite_id):
-    favorite = Favorite.query.get_or_404(favorite_id)
+    if request.method == 'GET':
+        return jsonify(property.to_dict()), 200
 
-    if favorite.user_id != current_user.id:
-        return jsonify({"message": "Unauthorized"}), 403
+    elif request.method == 'PATCH':
+        data = request.get_json()
+        for field in ['name', 'description', 'location', 'price', 'image']:
+            if field in data:
+                setattr(property, field, data[field])
+        db.session.commit()
+        return jsonify(property.to_dict()), 200
 
-    data = request.get_json()
-    # Assume we allow patching notes (or other favorite-related info)
-    favorite.notes = data.get('notes', favorite.notes)
-    db.session.commit()
-    return jsonify({"message": "Favorite updated successfully"}), 200
+    elif request.method == 'DELETE':
+        db.session.delete(property)
+        db.session.commit()
+        return jsonify({"message": "Property deleted successfully"}), 200
 
-# DELETE: Remove a favorite (login required)
-@app.route('/favorites/<int:favorite_id>', methods=['DELETE'])
-@login_required
-def delete_favorite(favorite_id):
-    favorite = Favorite.query.get_or_404(favorite_id)
+# Get all favorites
+@app.route('/favorites', methods=["GET"])
+def favorites():
+    favorite_list = [
+        {
+            "id": favorite.id,
+            "name": favorite.name,
+            "description": favorite.description,
+            "location": favorite.description,
+            "price": favorite.price,
+            "image": favorite.image
+        }
+        for favorite in Favorite.query.all()
+    ]
+    return jsonify(favorite_list), 200
 
-    if favorite.user_id != current_user.id:
-        return jsonify({"message": "Unauthorized"}), 403
+# Delete favorite by ID
+@app.route('/favorites/<int:id>', methods=["DELETE"])
+def delete_favorite(id):
+    favorite = Favorite.query.get(id)
+    if not favorite:
+        return jsonify({"errors": ["Favorite Property not found"]}), 404
 
-    db.session.delete(favorite)
-    db.session.commit()
-    return jsonify({"message": "Favorite removed successfully"}), 200
+    try:
+        db.session.delete(favorite)
+        db.session.commit()
+        return jsonify({"message": "Favorite Property deleted successfully"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"errors": [str(e)]}), 500
+
 
 # ------------------ Run Application ------------------
 if __name__ == "__main__":
