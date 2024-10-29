@@ -11,53 +11,40 @@ const Login = () => {
   const [loading, setLoading] = useState(false); // State for loading indicator
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Clear any previous errors
+    setError(null);  // Clear any previous errors
     setLoading(true); // Show loading indicator
 
     try {
-      const response = await fetch('/login', { // Use actual endpoint
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+        const response = await fetch('/login', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
 
-      if (!response.ok) {
-        // Try to get the error message from the response
-        const errorText = await response.text();
-        const errorData = errorText ? JSON.parse(errorText) : {};
-        throw new Error(errorData.message || 'Invalid login credentials');
-      }
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || 'Login failed');
+        }
 
-      const data = await response.json();
-      console.log('Login successful:', data);
+        const data = await response.json();  // Only parse JSON if the response is OK
+        console.log('Login successful:', data);
 
-      // Assuming your backend sends back a token
-      if (data.token) {
-        localStorage.setItem('authToken', data.token); // Save token to localStorage
-        navigate('/'); // Redirect to home or another protected page
-      } else {
-        setError('Login failed. Please try again.'); // Handle case where token is not returned
-      }
+        if (data.token) {
+            localStorage.setItem('authToken', data.token);  
+            navigate('/');  
+        }
 
     } catch (error) {
-      console.error('Error:', error);
-      setError(error.message); // Display error message to the user
+        console.error('Error:', error);
+        setError(error.message);  
     } finally {
-      setLoading(false); // Hide loading indicator
+        setLoading(false); 
     }
-  };
+};
 
   return (
     <div className="login-container">

@@ -13,54 +13,43 @@ const Signup = () => {
   const [success, setSuccess] = useState(false); // State for success message
   const navigate = useNavigate(); // For redirection after signup
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Clear any previous errors
-    setSuccess(false); // Reset success message
-    setLoading(true); // Show loading indicator
+    setError(null);       
+    setSuccess(false);    
+    setLoading(true);     
 
     try {
-      const response = await fetch('/signup', { // Use actual endpoint
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+        const response = await fetch('/signup', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
 
-      if (!response.ok) {
-        // Try to read the response as text and parse it
-        const errorText = await response.text();
-        const errorData = errorText ? JSON.parse(errorText) : {};
-        throw new Error(errorData.message || 'Signup failed. Please try again.');
-      }
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || 'Signup failed. Please try again.');
+        }
 
-      const data = await response.json();
-      console.log('Signup successful:', data);
+        const data = await response.json();  // Only parse JSON if the response is OK
+        console.log('Signup successful:', data);
 
-      setSuccess(true); // Show success message
-      setFormData({ username: '', email: '', password: '' }); // Reset form fields
+        setSuccess(true);  
+        setFormData({ username: '', email: '', password: '' });  
 
-      // Redirect to login after a delay
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
+        setTimeout(() => {
+            navigate('/login');
+        }, 2000);
 
     } catch (error) {
-      console.error('Error:', error);
-      setError(error.message); // Display error message
+        console.error('Error:', error);
+        setError(error.message);  
     } finally {
-      setLoading(false); // Hide loading indicator
+        setLoading(false); 
     }
-  };
+};
 
   return (
     <div className="signup-container">
