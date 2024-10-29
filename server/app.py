@@ -38,6 +38,7 @@ def home():
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
+# Signup route
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -61,6 +62,7 @@ def signup():
         db.session.rollback()
         return jsonify({"message": "User with that email or username already exists"}), 400
 
+# Login route
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -75,7 +77,10 @@ def login():
     user = User.query.filter_by(email=email).first()
     if user and bcrypt.check_password_hash(user.password, password):
         login_user(user)
-        return jsonify({"message": "Login successful"}), 200
+        # You might want to generate a token here or include more user details
+        return jsonify({"message": "Login successful", "user_id": user.id}), 200
+    
+    # Returning consistent JSON response for invalid credentials
     return jsonify({"message": "Invalid credentials"}), 401
 # ------------------ Property Endpoints ------------------
 # Get all properties

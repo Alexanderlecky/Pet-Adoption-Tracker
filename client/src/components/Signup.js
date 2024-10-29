@@ -8,10 +8,10 @@ const Signup = () => {
     email: '',
     password: '',
   });
-  const [error, setError] = useState(null);     // State for error messages
+  const [error, setError] = useState(null); // State for error messages
   const [loading, setLoading] = useState(false); // State for loading indicator
   const [success, setSuccess] = useState(false); // State for success message
-  const navigate = useNavigate();                // For redirection after signup
+  const navigate = useNavigate(); // For redirection after signup
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,9 +23,9 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);       // Clear any previous errors
-    setSuccess(false);    // Reset success message
-    setLoading(true);     // Show loading indicator
+    setError(null); // Clear any previous errors
+    setSuccess(false); // Reset success message
+    setLoading(true); // Show loading indicator
 
     try {
       const response = await fetch('/signup', { // Use actual endpoint
@@ -39,24 +39,24 @@ const Signup = () => {
       if (!response.ok) {
         // Try to read the response as text and parse it
         const errorText = await response.text();
-        const errorData = errorText ? JSON.parse(errorText) : {}; // Parse if possible
+        const errorData = errorText ? JSON.parse(errorText) : {};
         throw new Error(errorData.message || 'Signup failed. Please try again.');
       }
 
       const data = await response.json();
       console.log('Signup successful:', data);
 
-      setSuccess(true);  // Show success message
-      setFormData({ username: '', email: '', password: '' });  // Reset form fields
+      setSuccess(true); // Show success message
+      setFormData({ username: '', email: '', password: '' }); // Reset form fields
 
-      // Redirect to login or home page after a delay
+      // Redirect to login after a delay
       setTimeout(() => {
         navigate('/login');
       }, 2000);
 
     } catch (error) {
       console.error('Error:', error);
-      setError(error.message);  // Display error message
+      setError(error.message); // Display error message
     } finally {
       setLoading(false); // Hide loading indicator
     }
@@ -66,7 +66,7 @@ const Signup = () => {
     <div className="signup-container">
       <form className="signup-form" onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
-        {error && <p className="error-message">{error}</p>}      {/* Display error message if any */}
+        {error && <p className="error-message">{error}</p>} {/* Display error message if any */}
         {success && <p className="success-message">Signup successful! Redirecting to login...</p>} {/* Success message */}
         <div className="form-group">
           <label htmlFor="username">Username:</label>
@@ -101,7 +101,7 @@ const Signup = () => {
             required
           />
         </div>
-        <button type="submit" disabled={loading}>  {/* Disable button while loading */}
+        <button type="submit" disabled={loading}> {/* Disable button while loading */}
           {loading ? 'Signing up...' : 'Sign Up'}
         </button>
       </form>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import '../styles/Login.css';
 
 const Login = () => {
@@ -7,7 +7,7 @@ const Login = () => {
     email: '',
     password: '',
   });
-  const [error, setError] = useState(null);   // State for error messages
+  const [error, setError] = useState(null); // State for error messages
   const [loading, setLoading] = useState(false); // State for loading indicator
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);  // Clear any previous errors
+    setError(null); // Clear any previous errors
     setLoading(true); // Show loading indicator
 
     try {
@@ -36,21 +36,24 @@ const Login = () => {
       if (!response.ok) {
         // Try to get the error message from the response
         const errorText = await response.text();
-        const errorData = errorText ? JSON.parse(errorText) : {}; // Parse the error response if possible
+        const errorData = errorText ? JSON.parse(errorText) : {};
         throw new Error(errorData.message || 'Invalid login credentials');
       }
 
       const data = await response.json();
       console.log('Login successful:', data);
 
+      // Assuming your backend sends back a token
       if (data.token) {
-        localStorage.setItem('authToken', data.token);  // Save token to localStorage
-        navigate('/');  // Redirect to home or another protected page
+        localStorage.setItem('authToken', data.token); // Save token to localStorage
+        navigate('/'); // Redirect to home or another protected page
+      } else {
+        setError('Login failed. Please try again.'); // Handle case where token is not returned
       }
 
     } catch (error) {
       console.error('Error:', error);
-      setError(error.message);  // Display error message to the user
+      setError(error.message); // Display error message to the user
     } finally {
       setLoading(false); // Hide loading indicator
     }
@@ -60,7 +63,7 @@ const Login = () => {
     <div className="login-container">
       <form className="login-form" onSubmit={handleSubmit}>
         <h2>Login</h2>
-        {error && <p className="error">{error}</p>}  {/* Display error message if any */}
+        {error && <p className="error">{error}</p>} {/* Display error message if any */}
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
@@ -83,7 +86,7 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit" disabled={loading}>  {/* Disable button while loading */}
+        <button type="submit" disabled={loading}> {/* Disable button while loading */}
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
