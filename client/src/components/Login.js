@@ -21,7 +21,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
       event.preventDefault();
       try {
-          const response = await axios.post('http://localhost:5000/login', formData);
+          const response = await axios.post('/login', formData);
           console.log('Login successful:', response.data);
           // Redirect to the dashboard or home page after login
           navigate('/dashboard'); // Adjust the route as necessary
