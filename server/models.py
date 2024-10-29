@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, Float, Text, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, Float, Text, ForeignKey, DateTime, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy_serializer import SerializerMixin
 from flask_login import UserMixin
@@ -8,7 +8,7 @@ from datetime import datetime
 db = SQLAlchemy()
 
 # User Model
-class User(db.Model, SerializerMixin):
+class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     username = Column(String(100), unique=True, nullable=False)
@@ -16,6 +16,7 @@ class User(db.Model, SerializerMixin):
     password = Column(String(200), nullable=False)
     role = Column(String(50), nullable=False, default='user')  # User role (e.g., admin, user)
     created_at = Column(DateTime, default=datetime.utcnow)  # When the user was created
+    active = Column(Boolean, default=True)  # Set default active status
 
     # Flask-Login required methods
     @property
@@ -26,7 +27,6 @@ class User(db.Model, SerializerMixin):
     # Relationships
     favorites = relationship('Favorite', back_populates='user')
     transactions = relationship('Transaction', back_populates='user')
-
 # House Model
 class House(db.Model, SerializerMixin):
     __tablename__ = 'houses'
