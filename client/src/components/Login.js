@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate for redire
 import '../styles/Login.css';
 
 
-
 const Login = () => {
   const [formData, setFormData] = useState({
       email: '',
