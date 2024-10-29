@@ -25,7 +25,7 @@ const Login = () => {
     setLoading(true); // Show loading indicator
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/endpoint', { // Use actual endpoint
+      const response = await fetch('http://127.0.0.1:5000/login', { // Use actual endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
