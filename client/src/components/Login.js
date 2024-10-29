@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate for redire
 import '../styles/Login.css';
 
 
-import axios from 'axios'; // If using axios for HTTP requests
 
 const Login = () => {
   const [formData, setFormData] = useState({
