@@ -21,7 +21,7 @@ const Signup = () => {
   const handleSubmit = async (event) => {
       event.preventDefault();
       try {
-          const response = await fetch('https://prestige-properties.onrender.com/signup', {
+          const response = await fetch('https://prestige-properties.onrender.com', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
