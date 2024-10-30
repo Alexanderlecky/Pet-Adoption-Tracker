@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
-import '../styles/Signup.css'; // Importing the corresponding CSS file
+import { useNavigate } from 'react-router-dom';
+import '../styles/Signup.css';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -8,7 +8,7 @@ const Signup = () => {
       email: '',
       password: ''
   });
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
       const { name, value } = event.target;
@@ -21,13 +21,22 @@ const Signup = () => {
   const handleSubmit = async (event) => {
       event.preventDefault();
       try {
-          const response = await axios.post('/signup', formData);
-          console.log('Signup successful:', response.data);
-          // Redirect to login or dashboard after signup
-          navigate('/login'); // Adjust the route as necessary
+          const response = await fetch('https://prestige-properties.onrender.com/signup', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+          });
+          if (response.ok) {
+              const data = await response.json();
+              console.log('Signup successful:', data);
+              navigate('/login');
+          } else {
+              console.error('Signup failed:', response.statusText);
+          }
       } catch (error) {
           console.error('Error signing up:', error);
-          // Show error message to the user
       }
   };
 

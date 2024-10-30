@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
-
 
 const Login = () => {
   const [formData, setFormData] = useState({
       email: '',
       password: ''
   });
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
       const { name, value } = event.target;
@@ -21,13 +20,22 @@ const Login = () => {
   const handleSubmit = async (event) => {
       event.preventDefault();
       try {
-          const response = await axios.post('/login', formData);
-          console.log('Login successful:', response.data);
-          // Redirect to the dashboard or home page after login
-          navigate('/dashboard'); // Adjust the route as necessary
+          const response = await fetch('https://prestige-properties.onrender.com/login', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+          });
+          if (response.ok) {
+              const data = await response.json();
+              console.log('Login successful:', data);
+              navigate('/dashboard');
+          } else {
+              console.error('Login failed:', response.statusText);
+          }
       } catch (error) {
           console.error('Error logging in:', error);
-          // Show error message to the user
       }
   };
 
